@@ -1,0 +1,55 @@
+some:
+  text: zzzzz
+db:
+  username: ${username.value:postgres}
+  password: pass
+  driver: PostgresDriver
+  url: postgres:5432
+  host: localhost,127.0.0.1
+  properties:
+    first: 123
+    second: 567
+    third.value: Third
+  pool:
+    size: 12
+    timeout: 10
+  pools:
+    - size: 1
+      timeout: 1
+    - size: 2
+      timeout: 2
+    - size: 3
+      timeout: 3
+
+logging:
+  file:
+    name: local.log
+    path: /
+  level:
+    root: info
+    site.iparse.downloadservice.service.TestPropValue: warn
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties.hibernate:
+      show_sql: true
+      format_sql: true
+      hbm2ddl.auto: update
+#      ddl-auto: create-drop
+#      default_schema: dbName
+#  profiles.active: qa
+
+app:
+  download-service:
+    v1:
+      enabled: true
+    v2:
+      enabled: false
+    v3:
+      enabled: false
