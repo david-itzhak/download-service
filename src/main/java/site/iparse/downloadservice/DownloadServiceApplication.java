@@ -10,6 +10,8 @@ import site.iparse.downloadservice.dto.ConnectionData;
 import site.iparse.downloadservice.dto.ResponseData;
 import site.iparse.downloadservice.service.DownloadService;
 
+import java.util.UUID;
+
 @SpringBootApplication
 //@EnableConfigurationProperties({DbProperties.class})
 @ConfigurationPropertiesScan
@@ -23,6 +25,7 @@ public class DownloadServiceApplication {
 		DownloadService downloadService = context.getBean(DownloadService.class);
 		ConnectionData connectionData = ConnectionData.builder()
 				.downloadUrl("https://www.olsale.co.il/product/141855?af=2055&bid=true")
+				.taskUuid(UUID.randomUUID())
 				.build();
 		ResponseData responseData = downloadService.getResponseData(connectionData);
 		System.out.println("Headers: " + responseData.getHeaders());
