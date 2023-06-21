@@ -1,10 +1,7 @@
 package site.iparse.downloadservice.db.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -37,8 +34,8 @@ public class DownloadResult implements BaseEntity<Long>{
     @Column(name = "download_status_message")
     private String downloadStatusMessage;
 
-//    @Column(name = "download_param")
-//    private String downloadParam;
+    @Column(name = "download_param")
+    private String downloadParam;
 
     @Column(name = "response_format")
     private String responseFormat;
@@ -51,5 +48,8 @@ public class DownloadResult implements BaseEntity<Long>{
 
     @Column(name = "response_timestamp")
     private Timestamp responseTimestamp;
+
+    @Column(name = "attempt_count")
+    private Integer attemptCount;
 
 }

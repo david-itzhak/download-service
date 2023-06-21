@@ -17,4 +17,6 @@ public class ConnectionData {
     private String host;
     private int port;
     private String requestBody;
+    private int attemptCount;
+    private boolean followRedirects;
 }

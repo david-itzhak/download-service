@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.util;
+package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -9,6 +9,10 @@ import java.util.Map;
 
 @Component
 public class ConnectionCreator {
+
+    Map<String, String> defaultHeaders = Map.of(
+            "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+            "Accept-Encoding", "gzip");
     public Connection createConnection(ConnectionData connectionData) {
         Connection connection = Jsoup.connect(connectionData.getDownloadUrl());
         setRequestMethod(connection, connectionData.getMethod());
@@ -16,7 +20,7 @@ public class ConnectionCreator {
         setHeaders(connection, connectionData.getHeaders());
         setCookies(connection, connectionData.getCookies());
         setProxy(connection, connectionData.getHost(), connectionData.getPort());
-        connection.followRedirects(true);
+        connection.followRedirects(connectionData.isFollowRedirects());
         return connection;
     }
 
@@ -35,6 +39,8 @@ public class ConnectionCreator {
     private void setHeaders(Connection connection, Map<String, String> headers) {
         if (headers != null && !headers.isEmpty()) {
             connection.headers(headers);
+        } else {
+            connection.headers(defaultHeaders);
         }
     }
 

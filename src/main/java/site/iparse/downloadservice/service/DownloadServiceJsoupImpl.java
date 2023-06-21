@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import site.iparse.downloadservice.dto.ConnectionData;
 import site.iparse.downloadservice.dto.ResponseData;
-import site.iparse.downloadservice.service.util.ResponseConvertor;
-import site.iparse.downloadservice.service.util.ResponseExecutor;
+import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseConvertor;
+import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseExecutor;
 
 @Service
 @ConditionalOnProperty(name = "app.download-service.v1.enabled", havingValue = "true")

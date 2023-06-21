@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import site.iparse.downloadservice.dto.ConnectionData;
 import site.iparse.downloadservice.dto.ResponseData;
-import site.iparse.downloadservice.service.util.ResponseConvertor;
-import site.iparse.downloadservice.service.util.ResponseExecutor;
+import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseConvertor;
+import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseExecutor;
 
 import java.util.Map;
 import java.util.UUID;
@@ -33,20 +33,6 @@ class DownloadServiceJsoupImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-//        Map<String, String> headers = Map.of("Content-Type", "application/json", "Cache-Control", "no-cache");
-//        Map<String, String> cookies = Map.of("olsale", "eyJhbGciOiJIUzI1NiJ9.ODdCQzhEQTctN0Y4Qi00MTAyLUE4MkYtMzU4QUM5MEU0REMx.gnR2petTo7NtHvhBUCA2G-07Bx6BYq51ct7aItAipAA",
-//                "sessionId", "s%3A6519A93F-5CAB-48B6-BAFF-E209F23274AF.CJgl8lXa1Yhef%2BFsGJCplk928zJnATP2x3UE2pu6mPU)");
-//
-//        when(mockedResponse.headers()).thenReturn(headers);
-//        when(mockedResponse.statusCode()).thenReturn(200);
-//        when(mockedResponse.body()).thenReturn("{\"key\": \"value\"}");
-//        when(mockedResponse.charset()).thenReturn("UTF-8");
-//        when(mockedResponse.contentType()).thenReturn("application/json");
-//        when(mockedResponse.cookies()).thenReturn(cookies);
-//        when(mockedResponse.hasHeader(Mockito.anyString())).thenReturn(true);
-//        when(mockedResponse.hasCookie(Mockito.anyString())).thenReturn(true);
-//        when(mockedResponse.cookie(Mockito.anyString())).thenReturn(null);
-//        when(mockedResponse.parse()).thenThrow(new IOException());
     }
 
     @Test
@@ -60,7 +46,6 @@ class DownloadServiceJsoupImplTest {
                 .downloadUrl("https://example.com")
                 .method("GET")
                 .taskUuid(UUID.randomUUID())
-//                .requestBody("test")
                 .headers(Map.of("hk1", "vk1", "hk2", "vk2"))
                 .cookies(Map.of("hc1", "vc1", "hc2", "vc2"))
                 .host("localhost")
@@ -76,11 +61,6 @@ class DownloadServiceJsoupImplTest {
                 .cookies(cookies)
                 .httpBody("{\"key\": \"value\"}")
                 .build()).when(responseConvertor).convertToResponseData(mockedResponse);
-//        when(responseConvertor.getResponse(connectionData)).thenReturn(mockedResponse);
-//        when(downloadService.convertToResponseData(mockedResponse)).thenReturn( ResponseData.builder()
-//                .statusCode(200)
-//                .statusMessage("OK")
-//                .build());
 
         // Act
         ResponseData responseData = downloadService.getResponseData(connectionData);
@@ -155,34 +135,6 @@ class DownloadServiceJsoupImplTest {
 //                .taskUuid(UUID.randomUUID())
 //                .build();
 //        assertThrows(NullPointerException.class, () -> downloadService.validateConnectionData(invalidConnectionData2));
-//    }
-
-//    @Test
-//    void testCreateConnection() {
-//        // Create a mock connection data
-//        ConnectionData connectionData = ConnectionData.builder()
-//                .downloadUrl("https://example.com")
-//                .method("GET")
-//                .taskUuid(UUID.randomUUID())
-//                .requestBody("test")
-//                .headers(new HashMap<>())
-//                .cookies(new HashMap<>())
-//                .host("localhost")
-//                .port(8080)
-//                .build();
-//
-//        // Test the createConnection method
-//        Connection connection = downloadService.createConnection(connectionData);
-//
-//        // Verify the connection settings
-//        assertEquals("https://example.com", connection.request().url().toString());
-//        assertEquals(Connection.Method.GET, connection.request().method());
-//        assertEquals("test", connection.request().requestBody());
-//        assertFalse(connection.request().headers().isEmpty());
-//        assertTrue(connection.request().cookies().isEmpty());
-//        assertEquals("localhost/<unresolved>", connection.request().proxy().address().toString().split(":")[0]);
-//        assertEquals("8080", connection.request().proxy().address().toString().split(":")[1]);
-//        assertTrue(connection.request().followRedirects());
 //    }
 
 //    @Test
