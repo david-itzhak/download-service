@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class ConnectionCreator {
 
-    Map<String, String> defaultHeaders = Map.of(
+    private final static Map<String, String> defaultHeaders = Map.of(
             "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
             "Accept-Encoding", "gzip");
     public Connection createConnection(ConnectionData connectionData) {
