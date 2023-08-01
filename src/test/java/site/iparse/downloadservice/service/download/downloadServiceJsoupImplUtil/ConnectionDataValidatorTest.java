@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,12 +33,12 @@ class ConnectionDataValidatorTest {
         boolean followRedirects = true;
         ConnectionData connectionData = ConnectionData.builder()
                 .downloadUrl(downloadUrl)
-                .method(method)
+                .httpMethod(method)
                 .taskUuid(randomUUID)
                 .headers(headers)
                 .cookies(cookies)
-                .host(host)
-                .port(port)
+                .proxyHost(host)
+                .proxyPort(port)
                 .followRedirects(followRedirects)
                 .build();
 
@@ -63,12 +63,12 @@ class ConnectionDataValidatorTest {
         UUID randomUUID = UUID.randomUUID();
         boolean followRedirects = true;
         ConnectionData connectionData = ConnectionData.builder()
-                .method(method)
+                .httpMethod(method)
                 .taskUuid(randomUUID)
                 .headers(headers)
                 .cookies(cookies)
-                .host(host)
-                .port(port)
+                .proxyHost(host)
+                .proxyPort(port)
                 .followRedirects(followRedirects)
                 .build();
         assertThrows(NullPointerException.class, () ->  connectionDataValidator.validateConnectionData(connectionData));
@@ -87,11 +87,11 @@ class ConnectionDataValidatorTest {
         boolean followRedirects = true;
         ConnectionData connectionData = ConnectionData.builder()
                 .downloadUrl(downloadUrl)
-                .method(method)
+                .httpMethod(method)
                 .headers(headers)
                 .cookies(cookies)
-                .host(host)
-                .port(port)
+                .proxyHost(host)
+                .proxyPort(port)
                 .followRedirects(followRedirects)
                 .build();
         assertThrows(NullPointerException.class, () ->  connectionDataValidator.validateConnectionData(connectionData));

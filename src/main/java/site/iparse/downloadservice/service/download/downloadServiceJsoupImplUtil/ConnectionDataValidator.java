@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import org.springframework.stereotype.Component;
 import site.iparse.downloadservice.dto.ConnectionData;

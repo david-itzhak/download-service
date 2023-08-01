@@ -1,0 +1,6 @@
+ext {
+    versions = [
+            'jsoup': '1.16.1',
+            'testcontainers': '1.18.3'
+    ]
+}

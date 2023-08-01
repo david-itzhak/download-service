@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import org.jsoup.Connection;
 import org.junit.jupiter.api.BeforeEach;

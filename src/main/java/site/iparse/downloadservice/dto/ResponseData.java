@@ -3,6 +3,7 @@ package site.iparse.downloadservice.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 @Builder
@@ -16,4 +17,5 @@ public class ResponseData {
     String statusMessage;
     String contentType;
     String charset;
+    Timestamp responseTimestamp;
 }

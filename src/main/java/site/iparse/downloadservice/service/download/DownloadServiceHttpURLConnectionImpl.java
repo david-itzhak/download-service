@@ -1,11 +1,13 @@
-package site.iparse.downloadservice.service;
+package site.iparse.downloadservice.service.download;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import site.iparse.downloadservice.dto.ConnectionData;
 import site.iparse.downloadservice.dto.ResponseData;
+import site.iparse.downloadservice.service.download.downloadServiceUtil.EntryValueListOfMapToStringConverter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,14 +18,17 @@ import java.net.InetSocketAddress;
 
 import java.net.Proxy;
 import java.net.URL;
-import java.util.HashMap;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 @ConditionalOnProperty(name = "app.download-service.v2.enabled", havingValue = "true")
 @Slf4j
 public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
+
+    private final EntryValueListOfMapToStringConverter entryValueListOfMapToStringConverter;
 
     @Override
     public ResponseData getResponseData(ConnectionData connectionData) {
@@ -31,8 +36,7 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
         try {
             connection = createConnection(connectionData);
             String responseBody = getResponseBody(connection);
-            ResponseData responseData = convertToResponseData(connection, responseBody);
-            return responseData;
+            return convertToResponseData(connection, responseBody);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -47,8 +51,8 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
         HttpURLConnection connection;
         // Create URL object
         URL url = new URL(connectionData.getDownloadUrl());
-        if (connectionData.getHost() != null && connectionData.getPort() != 0) {
-            InetSocketAddress proxyAddress = new InetSocketAddress(connectionData.getHost(), connectionData.getPort());
+        if (connectionData.getProxyHost() != null && connectionData.getProxyPort() != 0) {
+            InetSocketAddress proxyAddress = new InetSocketAddress(connectionData.getProxyHost(), connectionData.getProxyPort());
             // Create Proxy object
             Proxy proxy = new Proxy(Proxy.Type.HTTP, proxyAddress);
             connection = (HttpURLConnection) url.openConnection(proxy);
@@ -56,9 +60,9 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
             connection = (HttpURLConnection) url.openConnection();
         }
 
-        if (connectionData.getMethod() != null) {
-            connection.setRequestMethod(connectionData.getMethod());
-            if ("POST".equals(connectionData.getMethod())) {
+        if (connectionData.getHttpMethod() != null) {
+            connection.setRequestMethod(connectionData.getHttpMethod());
+            if ("POST".equals(connectionData.getHttpMethod())) {
                 connection.setDoOutput(true);
                 writeRequestBody(connection, connectionData.getRequestBody());
             }
@@ -80,7 +84,6 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
             }
             connection.setRequestProperty("Cookie", cookieBuilder.toString());
         }
-
 
         return connection;
     }
@@ -108,11 +111,12 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
         return ResponseData.builder()
                 .statusCode(connection.getResponseCode())
                 .statusMessage(connection.getResponseMessage())
-                .headers(convertEntryValueListOfMapToString(headersMap, ","))
-                .cookies(convertEntryValueListOfMapToString(headersMap, ";"))
+                .headers(entryValueListOfMapToStringConverter.convertEntryValueListOfMapToString(headersMap, ","))
+                .cookies(entryValueListOfMapToStringConverter.convertEntryValueListOfMapToString(headersMap, ";"))
                 .contentType(connection.getHeaderField("Content-Type"))
                 .charset(getCharsetFromContentType(connection.getHeaderField("Content-Type")))
                 .httpBody(responseBody)
+                .responseTimestamp(new Timestamp(System.currentTimeMillis()))
                 .build();
     }
 
@@ -121,22 +125,6 @@ public class DownloadServiceHttpURLConnectionImpl implements DownloadService {
             return contentType.split("charset=")[1];
         }
         return null;
-    }
-
-    private Map<String, String> convertEntryValueListOfMapToString(Map<String, List<String>> initialMap, String delimiter) {
-        Map<String, String> convertedMap = new HashMap<>();
-
-        for (Map.Entry<String, List<String>> entry : initialMap.entrySet()) {
-            String entryKey = entry.getKey();
-            List<String> valuesList = entry.getValue();
-
-            // If there are multiple values, concatenate them with the specified delimiter
-            String concatenatedValue = String.join(delimiter, valuesList);
-
-            convertedMap.put(entryKey, concatenatedValue);
-        }
-
-        return convertedMap;
     }
 
     @PostConstruct

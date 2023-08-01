@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;

@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service;
+package site.iparse.downloadservice.service.download;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import site.iparse.downloadservice.dto.ConnectionData;
 import site.iparse.downloadservice.dto.ResponseData;
-import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseConvertor;
-import site.iparse.downloadservice.service.downloadServiceJsoupImplUtil.ResponseExecutor;
+import site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil.ResponseConvertor;
+import site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil.ResponseExecutor;
 
 @Service
 @ConditionalOnProperty(name = "app.download-service.v1.enabled", havingValue = "true")
@@ -26,6 +26,7 @@ public class DownloadServiceJsoupImpl implements DownloadService {
 
     @Override
     public ResponseData getResponseData(ConnectionData connectionData) {
+
         Connection.Response response = responseExecutor.getResponse(connectionData);
         return responseConvertor.convertToResponseData(response);
     }

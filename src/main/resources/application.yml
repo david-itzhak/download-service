@@ -1,5 +1,3 @@
-some:
-  text: zzzzz
 db:
   username: ${username.value:postgres}
   password: pass
@@ -27,8 +25,6 @@ logging:
     path: /
   level:
     root: info
-    site.iparse.downloadservice.service.TestPropValue: warn
-
 
 spring:
   datasource:
@@ -38,18 +34,31 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     properties.hibernate:
+      batch_size: 50
+      fetch_size: 50
       show_sql: true
       format_sql: true
-      hbm2ddl.auto: update
+      hbm2ddl.auto: validate
+    open-in-view: false
 #      ddl-auto: create-drop
 #      default_schema: dbName
 #  profiles.active: qa
 
+
 app:
   download-service:
     v1:
-      enabled: true
+      enabled: false
     v2:
       enabled: false
     v3:
-      enabled: false
+      enabled: true
+
+scheduler:
+  enabled: true
+
+database:
+  cleanup:
+    interval: 3600000
+    delay: 60000
+    minus_hours: 24

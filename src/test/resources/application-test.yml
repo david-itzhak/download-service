@@ -1,0 +1,22 @@
+db:
+  username: utest
+  password: ptest
+
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+#    template for postgres testcontainer
+    username: test
+    password: test
+
+#    template for H2
+#    url: jdbc:h2:mem:test
+#    username:
+#    password:
+#    driver-class-name: org.h2.Driver
+
+scheduler:
+  enabled: false

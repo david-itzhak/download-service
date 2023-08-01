@@ -1,1 +1,3 @@
 rootProject.name = 'download-service'
+include 'test-module'
+

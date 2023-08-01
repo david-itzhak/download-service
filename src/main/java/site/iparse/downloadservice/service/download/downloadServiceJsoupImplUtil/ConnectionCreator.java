@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -13,13 +13,14 @@ public class ConnectionCreator {
     private final static Map<String, String> defaultHeaders = Map.of(
             "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
             "Accept-Encoding", "gzip");
+
     public Connection createConnection(ConnectionData connectionData) {
         Connection connection = Jsoup.connect(connectionData.getDownloadUrl());
-        setRequestMethod(connection, connectionData.getMethod());
+        setRequestMethod(connection, connectionData.getHttpMethod());
         setRequestBody(connection, connectionData.getRequestBody());
         setHeaders(connection, connectionData.getHeaders());
         setCookies(connection, connectionData.getCookies());
-        setProxy(connection, connectionData.getHost(), connectionData.getPort());
+        setProxy(connection, connectionData.getProxyHost(), connectionData.getProxyPort());
         connection.followRedirects(connectionData.isFollowRedirects());
         return connection;
     }

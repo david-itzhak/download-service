@@ -1,4 +1,4 @@
-package site.iparse.downloadservice.service.downloadServiceJsoupImplUtil;
+package site.iparse.downloadservice.service.download.downloadServiceJsoupImplUtil;
 
 import org.jsoup.Connection;
 import org.junit.jupiter.api.Assertions;
@@ -51,12 +51,12 @@ public class ResponseExecutorTest {
         boolean followRedirects = true;
         ConnectionData connectionData = ConnectionData.builder()
                 .downloadUrl(downloadUrl)
-                .method(method)
+                .httpMethod(method)
                 .taskUuid(randomUUID)
                 .headers(headers)
                 .cookies(cookies)
-                .host(host)
-                .port(port)
+                .proxyHost(host)
+                .proxyPort(port)
                 .followRedirects(followRedirects)
                 .build();
 
